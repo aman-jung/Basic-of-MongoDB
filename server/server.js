@@ -19,12 +19,19 @@ app.post('/todo',(req,res)=>{
 	var todos = new Todo({
 		text:req.body.text
 	});
-	todos.save().then((res)=>{
-		res.send(res);
+	todos.save().then((resp)=>{
+		res.send(resp);
 	},(err)=>{
 		res.status(400).send(err);
 	});
-})
-app.listen(4000,()=>{
+});
+app.get('/todo',(req,res)=>{
+	Todo.find().then((result)=>{
+		res.send({result});
+	},(err)=>{
+		res.status(400).send(err);
+	});
+});
+app.listen(5000,()=>{
 	console.log("server is up and running");
-})
+});
