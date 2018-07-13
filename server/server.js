@@ -47,6 +47,20 @@ app.get('/todo/:id',(req,res)=>{
 		res.status(400).send();
 	});
 });
+app.delete('/todo/:id',(req,res)=>{
+	var id = req.params.id;
+	if(!ObjectID.isValid(id)){
+		res.status(401).send();
+	}
+	Todo.findByIdAndRemove(id).then((result)=>{
+		if(!result){
+			res.status(400).send();
+		}
+		res.send({result});
+	}).catch((err)=>{
+		res.status(404).send();
+	});
+});
 app.listen(5000,()=>{
 	console.log("server is up and running");
 });
